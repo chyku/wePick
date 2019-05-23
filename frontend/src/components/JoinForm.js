@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Main from './main';
 import TextField from '@material-ui/core/TextField';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
