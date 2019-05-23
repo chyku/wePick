@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Main from './main';
 import CameraPage from './CameraPage';
+import JoinForm from './JoinForm';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 class App extends Component {
@@ -11,6 +12,7 @@ class App extends Component {
             <div className="App">
                 <Route exact path="/" component={Main} />
                 <Route path="/camera" component={CameraPage} />
+                <Route path="/join" component={JoinForm} />
             </div>
         </Router>
     );
