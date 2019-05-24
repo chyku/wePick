@@ -50,7 +50,6 @@ class ItemList extends Component {
     // assigning colors to each user - generate rgb or some shit idfk
 
     render() {
-        
         return (
             <div>
                 <div>
