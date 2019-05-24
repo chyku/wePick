@@ -23,6 +23,7 @@ class ItemList extends Component {
 
         this.getText = this.getText.bind(this);
         this.selectItem = this.selectItem.bind(this);
+        this.submit = this.submit.bind(this);
     }
 
     componentDidMount() {
@@ -45,6 +46,10 @@ class ItemList extends Component {
         text.remove();
     }
 
+    submit() {
+        this.props.history.push('/complete');
+    }
+
     // need other stuff for when other people select items
     // logic against selecting other ppls items
     // assigning colors to each user - generate rgb or some shit idfk
@@ -52,26 +57,27 @@ class ItemList extends Component {
     render() {
         return (
             <div>
+                <h3>Group number: {this.state.groupId}</h3>
                 <div>
                     {this.state.text.map((item, index) => {
                         return (
                         item.user ?
                             (item.user == this.state.userId) ?
-                                (<Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>
+                                (<p><Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>
                                     {"Name: " + item.name + " Price:" + item.price}
-                                </Button>)
+                                </Button></p>)
                                 :
-                                (<Button variant="contained" color="primary" id={index} onClick={() => this.selectItem(index)}>
+                                (<p><Button variant="contained" color="primary" id={index} onClick={() => this.selectItem(index)}>
                                     {"Name: " + item.name + " Price:" + item.price}
-                                </Button>)
+                                </Button></p>)
                             :
-                            (<Button variant="contained" id={index} onClick={() => this.selectItem(index)}>
+                            (<p><Button variant="contained" id={index} onClick={() => this.selectItem(index)}>
                                     {"Name: " + item.name + " Price:" + item.price}
-                            </Button>)
+                            </Button></p>)
                     )})}
                 </div>
                 <div>
-                    <Button variant="contained" color="secondary">
+                    <Button variant="contained" color="secondary" onClick={this.submit}>
                         Enter
                     </Button>
                 </div>

@@ -44,7 +44,7 @@ class CameraPage extends Component {
 
     var groupId = Math.floor(100000 + Math.random() * 900000);
   
-    firebase.database().ref('groups/' + groupId).push({
+    firebase.database().ref('groups/' + groupId + '/users').push({
       finished: false,
       is_admin: true
     });
@@ -53,7 +53,7 @@ class CameraPage extends Component {
   }
 
   updateReceipt = (data) => {
-    firebase.database().ref('groups/' + this.state.groupId + '/receipt').push(
+    firebase.database().ref('groups/' + this.state.groupId + '/receipt').set(
       data
     ).then(() => {
       this.props.history.push('/select?group=' + this.state.groupId + '&user=' + this.state.userId);
@@ -88,13 +88,15 @@ class CameraPage extends Component {
     })
     .then( (response) => {
       response.json().then((data) => {
-        const receiptTest = data.responses[0].fullTextAnnotation.text
-        console.log(receiptTest);
-        console.log(this.getItemList(receiptTest));
-        const receipt = this.getItemList(receiptTest);
-        this.createGroup();
-        this.updateReceipt(receipt);
-        })
+        const receiptTest = data.responses[0].fullTextAnnotation
+        if (receiptTest) {
+          const receipt = this.getItemList(receiptTest.text);
+          this.createGroup();
+          this.updateReceipt(receipt.resultsArr);
+        } else {
+          alert("No text detected!")
+        }
+      })
     });
   }
 
