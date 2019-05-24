@@ -1,20 +1,13 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { setGroupId, addUser } from '../redux/actions/types'
 import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import firebase from '../utils/firebase-setup'
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-      setGroupId,
-      addUser
-    },
-    dispatch
-  )
-}
+
 
 class JoinForm extends Component {
   constructor(props) {
@@ -24,8 +17,27 @@ class JoinForm extends Component {
       value: '',
     };
 
+    this.addUser = this.addUser.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  addUser = (groupId, name) => {
+    var myRef = firebase.database().ref().push();
+    var key = myRef.key;
+  
+    firebase.database().ref('groups/' + groupId + '/users/').push({
+      name: name,
+      finished: false,
+      is_admin: false
+    })
+    .then(() => {
+      console.log(key);
+      this.props.history.push('/select?group=' + groupId + '?user=' + key);
+    })
+    .catch( (e) => {
+      console.log(e);
+    })
   }
 
   handleChange = name => event => {
@@ -33,12 +45,8 @@ class JoinForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.history.push('/select');
-    const groupId = setGroupId(this.state.value);
-    const userId = addUser(this.state.value, "Welch");
-    console.log(groupId);
-    console.log(userId);
     event.preventDefault();
+    this.addUser(this.state.value, "sjdklf");
   }
 
   render() {
@@ -64,6 +72,4 @@ class JoinForm extends Component {
   }
 }
 
-export default connect(
-  mapDispatchToProps
-)(withRouter(JoinForm))
+export default withRouter(JoinForm)
