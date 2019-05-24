@@ -1,0 +1,25 @@
+{
+    "_id": "5ce6fea96759394351beec4b",
+    "type": "Savings",
+    "nickname": "Tala",
+    "balance": 10000,
+  },
+  {
+    "_id": "5ce6fefa6759394351beec4c",
+    "type": "Savings",
+    "nickname": "Michelle"
+    "balance": 10000,
+  },
+  {
+    "_id": "5ce6ff266759394351beec4d",
+    "type": "Savings",
+    "nickname": "Eric",
+    "balance": 10000,
+  },
+  {
+    "_id": "5ce6ff5c6759394351beec4f",
+    "type": "Savings",
+    "nickname": "Kelley",
+    "balance": 10000,
+  }
+]

@@ -1,1 +1,1 @@
-# wePick
+# wePay
