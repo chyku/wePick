@@ -3,9 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import firebase from '../utils/firebase-setup'
+import firebase from '../utils/firebase-setup';
 
 
 
@@ -15,6 +13,7 @@ class JoinForm extends Component {
 
     this.state = {
       value: '',
+      name: ''
     };
 
     this.addUser = this.addUser.bind(this);
@@ -32,8 +31,7 @@ class JoinForm extends Component {
       is_admin: false
     })
     .then(() => {
-      console.log(key);
-      this.props.history.push('/select?group=' + groupId + '?user=' + key);
+      this.props.history.push('/select?group=' + groupId + '&user=' + key);
     })
     .catch( (e) => {
       console.log(e);
@@ -46,7 +44,7 @@ class JoinForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.addUser(this.state.value, "sjdklf");
+    this.addUser(this.state.value, this.state.name);
   }
 
   render() {
@@ -54,6 +52,14 @@ class JoinForm extends Component {
       <div>
         <form onSubmit={this.handleSubmit}>
           <label>
+            <TextField
+                id="outlined-search"
+                label="Name"
+                type="search"
+                margin="normal"
+                variant="outlined"
+                onChange={this.handleChange('name')}
+                />
             <TextField
                 id="outlined-search"
                 label="Code"
