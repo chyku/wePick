@@ -10,17 +10,28 @@ export const addGroup = (name) => async dispatch => {
     var myRef = database.ref().push();
     var key = myRef.key();
 
-    database.ref('groups/' + groupId + 'users/').push({
-        name: name,
-        finished: false,
-        is_admin: true
-    })
-
-    var ret = {
-        groupId: groupId,
-        userId: key
+    return dispatch => {
+        database.ref('groups/' + groupId + 'users/').push({
+            name: name,
+            finished: false,
+            is_admin: true
+        })
+        .then(() => {
+          dispatch(() => {
+            return {
+                type: CREATE_GROUP,
+                payload: {
+                    groupId: groupId,
+                    userId: key
+                }
+            }
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    return ret;
+    
 };
 
 
@@ -28,18 +39,30 @@ export const addUser = (groupId, name) => async dispatch => {
     var myRef = database.ref().push();
     var key = myRef.key();
 
-    database.ref('groups/' + groupId + 'users/').push({
-        name: name,
-        finished: false,
-        is_admin: false
-    })
-
-    return key;
+    return dispatch => {
+        database.ref('groups/' + groupId + 'users/').push({
+            name: name,
+            finished: false,
+            is_admin: false
+        })
+        .then(() => {
+            dispatch({
+                type: CREATE_USER,
+                payload: key
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
 };
 
 export const setGroupId = (groupId) => async dispatch => {
     // Check if the group exists
-    return groupId;
+    return dispatch({
+        type: SET_GROUP,
+        payload: groupId
+    });
 };
 
 // Using the 

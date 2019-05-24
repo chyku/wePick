@@ -5,20 +5,24 @@ const initialState = {
   groupdId: ''
 };
 
-function rootReducer(state = initialState, action) {
+export default function rootReducer(state = initialState, action) {
   switch(action.type) {
     case CREATE_USER:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         userId: action.payload
-      });
+      };
     case CREATE_GROUP:
-      return Object.assign({}, state, {
-        groupId: action.payload
-      });
+    return {
+        ...state,
+        userId: action.payload.userId,
+        groupId: action.payload.groupId
+      };
     case SET_GROUP:
-      return Object.assign({}, state, {
+    return {
+        ...state,
         groupId: action.payload
-      })
+      };
     default:
       return state;
   }

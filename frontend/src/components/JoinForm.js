@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { setGroupId, addUser } from '../redux/actions/types'
 import { withRouter } from "react-router-dom";
-
 import Button from '@material-ui/core/Button';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+      setGroupId,
+      addUser
+    },
+    dispatch
+  )
+}
 
 class JoinForm extends Component {
   constructor(props) {
@@ -22,7 +33,11 @@ class JoinForm extends Component {
   }
 
   handleSubmit(event) {
-    this.props.history.push('/submitted');
+    this.props.history.push('/select');
+    const groupId = setGroupId(this.state.value);
+    const userId = addUser(this.state.value, "Welch");
+    console.log(groupId);
+    console.log(userId);
     event.preventDefault();
   }
 
@@ -49,4 +64,6 @@ class JoinForm extends Component {
   }
 }
 
-export default withRouter(JoinForm);
+export default connect(
+  mapDispatchToProps
+)(withRouter(JoinForm))
