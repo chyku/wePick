@@ -14,7 +14,7 @@ class CameraPage extends Component {
     const prices = receiptArr.filter(word => regex.test(word));
     const meals = receiptArr.filter(word => regex2.test(word));
     const mealprices = prices.slice(0,meals.length);
-    const mealsfinal = meals.map(word => word.slice(2))
+    const mealsfinal = meals.map(word => word.slice(2));
     var resultsArr = [];
     for (var i = 0; i < mealsfinal.length; i++) {
       resultsArr = resultsArr.concat({name: mealsfinal[i], price: mealprices[i]});
