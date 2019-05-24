@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import firebase from '../utils/firebase-setup';
 
 import 'react-html5-camera-photo/build/css/index.css';
 import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
@@ -7,6 +8,19 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'xregexp';
  
 class CameraPage extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      userId: '',
+      groupId: ''
+    }
+
+    this.createGroup = this.createGroup.bind(this);
+    this.updateReceipt = this.updateReceipt.bind(this);
+}
+
+
   getItemList(receipt){
     const regex = /\$\d+\.\d\d/im
     const regex2 = /^\d /im
@@ -20,6 +34,30 @@ class CameraPage extends Component {
       resultsArr = resultsArr.concat({name: mealsfinal[i], price: mealprices[i]});
     }
     const results = {resultsArr};
+    return results;
+  }
+
+  createGroup = () => {
+    var myRef = firebase.database().ref().push();
+    var key = myRef.key;
+
+
+    var groupId = Math.floor(100000 + Math.random() * 900000);
+  
+    firebase.database().ref('groups/' + groupId).push({
+      finished: false,
+      is_admin: true
+    });
+
+    this.setState({groupId: groupId, userId: key});
+  }
+
+  updateReceipt = (data) => {
+    firebase.database().ref('groups/' + this.state.groupId + '/receipt').push(
+      data
+    ).then(() => {
+      this.props.history.push('/select?group=' + this.state.groupId + '&user=' + this.state.userId);
+    })
   }
 
   onTakePhoto (dataUri) {
@@ -52,7 +90,10 @@ class CameraPage extends Component {
       response.json().then((data) => {
         const receiptTest = data.responses[0].fullTextAnnotation.text
         console.log(receiptTest);
-        this.getItemList(receiptTest);
+        console.log(this.getItemList(receiptTest));
+        const receipt = this.getItemList(receiptTest);
+        this.createGroup();
+        this.updateReceipt(receipt);
         })
     });
   }
