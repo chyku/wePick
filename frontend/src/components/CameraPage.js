@@ -7,7 +7,7 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from 'react-html5-camera-photo';
 import 'xregexp';
  
 class CameraPage extends Component {
-getItemList(receipt){
+  getItemList(receipt){
     const regex = /\$\d+\.\d\d/im
     const regex2 = /^\d /im
     const receiptArr = receipt.split('\n');
@@ -67,6 +67,5 @@ getItemList(receipt){
     );
   }
 }
-
 
 export default CameraPage
