@@ -50,10 +50,6 @@ class ItemList extends Component {
         this.props.history.push('/complete');
     }
 
-    // need other stuff for when other people select items
-    // logic against selecting other ppls items
-    // assigning colors to each user - generate rgb or some shit idfk
-
     render() {
         return (
             <div>
