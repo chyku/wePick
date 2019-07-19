@@ -58,12 +58,7 @@ class ItemList extends Component {
                 <h3>Group number: {this.state.groupId}</h3>
                 <div>
                     {this.state.text.map((item, index) => {
-                        return 
-                        (<p><Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>
-                        {"Name: " + item.name + " Price:" + item.price}
-                    </Button></p>)
-                        
-                        (
+                        return (
                         item.user ?
                             (item.user == this.state.userId) ?
                                 (<p><Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>
