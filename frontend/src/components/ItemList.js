@@ -21,19 +21,21 @@ class ItemList extends Component {
             if (snap.val()) this.setState({ text: snap.val() });
         };
 
+        this.receiptRef = firebase.database().ref('groups/' + this.state.groupId + '/receipt');
+
         this.getText = this.getText.bind(this);
         this.selectItem = this.selectItem.bind(this);
         this.submit = this.submit.bind(this);
     }
 
     componentDidMount() {
-        var text = firebase.database().ref('groups/' + this.state.groupId + '/receipt');
-        text.on('value', this.getText);
+        // Subscribe to the database for changes
+        this.receiptRef.on('value', this.getText);
     }
 
     componentWillUnmount() {
-        var text = firebase.database().ref('groups/' + this.state.groupId + '/receipt');
-        text.off('value', this.getText);
+        // Unsubscribe from changes
+        this.receiptRef.off('value', this.getText);
     }
 
     selectItem(itemId) {
@@ -56,7 +58,12 @@ class ItemList extends Component {
                 <h3>Group number: {this.state.groupId}</h3>
                 <div>
                     {this.state.text.map((item, index) => {
-                        return (
+                        return 
+                        (<p><Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>
+                        {"Name: " + item.name + " Price:" + item.price}
+                    </Button></p>)
+                        
+                        (
                         item.user ?
                             (item.user == this.state.userId) ?
                                 (<p><Button variant="contained" color="secondary" id={index} onClick={() => this.unselectItem(index)}>

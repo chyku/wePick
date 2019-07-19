@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Main from './main';
 import CameraPage from './CameraPage';
 import JoinForm from './JoinForm';
-import Finish from './finish';
+import Finish from './Finish';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import ItemList from './ItemList';
 

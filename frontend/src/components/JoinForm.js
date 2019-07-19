@@ -5,8 +5,6 @@ import { withRouter } from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import firebase from '../utils/firebase-setup';
 
-
-
 class JoinForm extends Component {
   constructor(props) {
     super(props);
